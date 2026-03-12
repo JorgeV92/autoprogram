@@ -1,0 +1,105 @@
+\documentclass[twoside,11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{../style/jeffe,graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{microtype}
+\usepackage{cite}
+\usepackage{enumerate}
+\usepackage{asymptote}
+
+
+\usepackage[charter]{mathdesign}
+\usepackage[scaled=.96,osf]{XCharter}
+\usepackage{sourcesanspro,inconsolata,eucal}
+\SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{b}{\updefault}
+\SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{b}{\updefault}
+\SetMathAlphabet{\mathsf}{normal}{\encodingdefault}{\sfdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathtt}{normal}{\encodingdefault}{\ttdefault}{\mddefault}{\updefault}
+\usepackage{textcomp}
+
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\numberwithin{figure}{section}
+
+\def\Sym#1{\texttt{#1}}						% symbol (generator/terminal/dart)
+\def\Inverse#1{\={#1}}						% inverse
+
+\def\rev{\operatorname{\mathit{rev}}}		% reversal
+\def\Head{\operatorname{\mathit{head}}}		% head
+\def\Tail{\operatorname{\mathit{tail}}}		% tail
+\def\Left{\operatorname{\mathit{left}}}		% left shore
+\def\Right{\operatorname{\mathit{right}}}	% right shore
+\def\bdry{\partial\!}
+
+\makeatletter
+\newcommand{\smash@bar}[4]{%
+  \smash{\rlap{\raisebox{-#3\fontdimen5#10}{$\m@th#2\mkern#4mu\mathchar'26$}}}%
+}
+\newcommand{\lambdabar}{{\mathchoice
+  {\smash@bar\textfont\displaystyle{0.25}{2.75}\lambda}
+  {\smash@bar\textfont\textstyle{0.25}{2.75}\lambda}
+  {\smash@bar\scriptfont\scriptstyle{0.25}{2.75}\lambda}
+  {\smash@bar\scriptscriptfont\scriptscriptstyle{0.25}{2.75}\lambda}
+}}
+\makeatother
+
+\def\Walk{\omega}
+\def\PerturbedWalk{\widetilde\omega}
+\def\Radius{\rho}
+\def\Relevant#1{\overline{#1}}
+\def\Lift#1{\widehat{#1}}
+\def\Tiling{\Lift{Q}}
+\def\Grammar{\mathcal{G}}
+
+\usepackage{arydshln}
+\dashlinedash 0.75pt
+\dashlinegap 1.5pt
+
+\clubpenalty 8000
+\widowpenalty 8000
+
+\let\Newpage\relax
+
+% =========================================================
+
+\begin{document}
+
+\pagestyle{myheadings}
+\markboth{Topologically Trivial Closed Walks in Directed Surface Graphs}
+    {Jeff Erickson and Yipu Wang}
+
+\begin{titlepage}
+
+\title{Static Trees%
+\thanks{Research on this paper was partially supported by NSF grant CCF-1408763.  An extended abstract of this paper will be presented at the 33rd International Symposium on Computational Geometry \cite{ccwx}.}}
+
+\author{\href{http://jeffe.cs.illinois.edu}{Jorge Velez}\\[1ex]
+University of Illinois at Urbana-Champaign}
+
+\maketitle
+It is my responsibilty as a human being that has acquired knowledge to try to understand \emph{reality} and seek \emph{truth} from the existance of what I percieve and yet not perceive based
+on mathematical \emph{proof}. Anything outside of this horizon is irrelevant to my existance it is \emph{meaningless} in a reality embodied by \emph{Nothingness}. 
+\end{titlepage}
+
+\tableofcontents
+
+\section{P vs. NP Statement}
+An array is a linear data structure that collects elements of the same data type and stores them in contiguous memory locations." \\ 
+To begin with we can acknowledge that we know far more today about \emph{computional complexity} than we knew before starting with \emph{Kurt Gödel} and \emph{John Von Neumann}. 
+But for what we know about the subject we still are far from truly understanding what encompasses computional complexity. \\
+
+So we being with a general \textbf{Statement:} Given some map with labeled countries is there a configuration such that the map is 3-colorable?  The questions we should generally ask ourselves is the following 
+is there an efficient algorithm to compute and tells us if a given map is 3-colorable? And also we must define what me mean by effiecent? So now I claim that effiecnt means that with a resonable amount of steps we 
+can get an answer for the 3-colorable problem, where steps is how many computaions are preformed by a given \emph{machine}, where the \emph{machine} here is defined by a \emph{Turing machine}. So now if this \emph{machine} can
+compute the 3-clorable problem in \emph{polynomial} time then \textbf{P = NP} and the universe will colopase to those who understand its significance. \\
+
+So more formally we define \textbf{Efficent} as 
+\[
+    \text{Efficent: } \text{poly}(n)-\text{time} (n = \vert \text{ input } \vert) \:: (P)
+ \]
+
+ We also have in all cases where the task has a brute force solution that leads to \emph{exponential}($n$) time algorithm. In the 3-colorable problem we could try all possibel colorings for a given map $M$ that will explode exppnentailly over each try.
+
+\end{document}

@@ -1,0 +1,55 @@
+\begin{hintitem}{4.1}
+    Force $p_i q_i \mid x + i$.
+  
+\end{hintitem}
+\begin{hintitem}{4.2}
+    Solve the problem for prime powers dividing $n$.
+    The answer is a power of two.
+  
+\end{hintitem}
+\begin{hintitem}{4.3}
+    Proceed by contradiction.
+    Look at a prime power $p^r \mid n$,
+    and show that either $a_i \equiv 0 \pmod{p^r} \; \forall i$ or $a_i \equiv 1 \pmod{p^r} \; \forall i$.
+  
+\end{hintitem}
+\begin{hintitem}{4.4}
+    Pick $x$, $N$ such that
+    \[ \frac{x+1}{N}, \; \dots, \;  \frac{x+k}{N} \]
+    works after reducing to lowest terms.
+    Force exactly one prime to cancel in each reduction.
+  
+\end{hintitem}
+\begin{hintitem}{4.5}
+    Pick $n$ modulo $p$ and $p-1$ for a large prime $p$.
+    Force $p$ to divide a constant.
+  
+\end{hintitem}
+\begin{hintitem}{4.6}
+    Simon's Favorite.
+  
+\end{hintitem}
+\begin{hintitem}{4.7}
+    For $n=3$, $x_1 \underbrace{\quad}_{2} x_2 \underbrace{\quad}_{3} x_3$ gives $\{10,12,15\}$.
+    For $n=4$,
+    $x_1 \underbrace{\quad}_{60} x_2 \underbrace{\quad}_{90} x_3 \underbrace{\qquad}_{7} x_4$.
+  
+\end{hintitem}
+\begin{hintitem}{4.8}
+    Show that the difference is divisible by
+    $2^3 \cdot 3^3 \cdot 5 \cdot 7 \cdot 13 \cdot 19 \cdot 37$.
+  
+\end{hintitem}
+\begin{hintitem}{5.1}
+    Look at the one-dimensional case first;
+    the answer is the same.
+  
+\end{hintitem}
+\begin{hintitem}{5.2}
+    Pick $t_i$ for which $t_i \equiv 1 \pmod{m_i}$ and $t_i \equiv 0 \pmod{m_j}$ for $i \neq j$.
+    Look at numbers of the form \[ \sum b_i t_i \] where $b_i \in B_i$,
+    and $B_i$ is selected so that for any $x,y \in B_i$
+    we have $x-y \notin A_i$.
+    Show greedily that we can have \[ \left\lvert B_i \right\rvert \ge \frac{m_i}{2\left\lvert A_i \right\rvert+1}. \]
+  
+\end{hintitem}

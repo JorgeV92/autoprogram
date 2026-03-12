@@ -1,0 +1,139 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{../evan}
+\usepackage{listings}    
+\usepackage{xcolor}    
+
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black},
+  % The following lines override evan.sty defaults:
+  frame=none,           % Removes the shadowbox/border
+  numbers=none,         % Removes the line numbers
+  backgroundcolor={},   % Makes the background transparent (so theorem color shows)
+  xleftmargin=0pt,      % Removes extra indentation
+  xrightmargin=0pt
+}
+
+\declaretheorem[style=thmbluebox,name=Solution,numberwithin=section]{solution}
+\declaretheorem[style=thmredbox,name=Problem,sibling=theorem]{prob}
+
+\begin{document}
+\title{CodeForces Review}
+\date{3 January 2026}
+\maketitle
+
+\begin{center}
+  \itshape
+  Sometimes figuring out the langauge semantics is harder then implementing the algorithm.
+\end{center}
+
+An important skill for olympiad geometers is to be able to guess when three points are collinear,
+four points are concyclic, three lines are concurrent, and so on.
+Difficult geometry problems (on the level of IMO 3/6) often amount to finding two or three critical claims;
+each of these claims may be no harder to prove than an IMO 1/4, but making the right guesses of \emph{what} to prove
+can turn out to the core difficulty of the problem.
+For a fantastic example, see my solution to
+\href{http://www.aops.com/community/c6h418983p3518149}{IMO 2011/6}.
+
+In this exercise, I'll put write down a configuration of several points, lines, and circles.
+Your job is to find as many ``coincidences'' as you can: nontrivial collinearities, equal angles,
+cyclic quadrilaterals, and so on and so forth.
+Then, see if you can prove them!
+
+\tableofcontents
+
+\newpage
+
+\section{900 rated}
+\begin{problem}
+   B. Chemistry \\
+
+   Given a string $s$ of length $n$, consisting of lowercase latin letters, and an integer $k$. 
+   Check if it is possible to remove \textbf{extactly k} characters from the string $s$ in such a way that the remaining 
+   can be rearranged to form a palindrome. Note that you can reorder the remaining characters in any way. \\
+
+   A \textbf{palindrome} is a string that is equal to its reversal.
+\end{problem}
+
+\begin{solution}
+    We only need to check how many letters have an odd occurence in the string. If we have $x$ letters with odd occurences 
+    then this cannot be greater than $k + 1$. We are allowed to have 1 occurence of a odd letter in a palindrome or 0. Since we 
+    have up to $k$ removables then after $x - k$ we must have odd letters $\leq 1$. 
+\begin{lstlisting}
+int main() {
+  int t;
+  cin >> t;
+  while (t--) {
+    int n, k;
+    string s;
+    cin >> s;
+    vector<int> freq(26);
+    for (char c : s) {
+      freq[c-'a']++;
+    }
+    int odd = 0;
+    for (int x : freq) {
+      if ((x&1)) odd++;
+    }
+    if (odd > k + 1) {
+      cout << "NO\n";
+    } else {
+      cout << "YES\n";
+    }
+  }
+}
+\end{lstlisting}
+\end{solution}
+
+\newpage
+
+  \begin{problem}
+    A. Two Permutations \\ 
+
+    Given three integers, $n, a,$ and $b$. Determine if there exists two permutations $p$ and $q$ of length $n$, which 
+    meet the following conditions: 
+      \begin{itemize}
+        \item The length of the longest common prefix of $p$ and $q$ is a.
+        \item The length of the longest common suffix of $p$ and $q$ is $b$.
+      \end{itemize}
+      A permutation of length of $n$ is an array containing each integer from $1$ to $n$ exactly once. For 
+      example, $[2,3,1,5,4]$, is a permutation. \\ 
+
+      For example for $n = 4, a = 1, b = 1$ we could have $[1,2,3,4]$ or $[1,3,2,4]$.
+\end{problem}
+
+\begin{solution}
+  If $a + b + 2 \leq n$, then there is always a way to find a valid paring for exmaple:
+    \[
+        A = \{\textcolor{red}{1,2,\cdots, a,} \textcolor{orange}{n-b,} a+1, a+2, \cdots, n-b-1, n-b+1, n-b+2, \cdots, n\}
+    \]
+    \[
+      B = \{1,2,\cdots,a,a+1,a+2,\cdots,n-b-1,n-b,n-b+1,n-b+2,\cdots, n\}
+    \]
+
+    We can seprate the array into the left part, middle, right part, where left is $a$ and rigth is $b$ then the middle there is the
+    case the must have atlest two numbers to be able to not grow the prefix or suffix for $A$  and $B$ which is why we have $a + b + 2$ and this 
+    cannot be greater than the length of the array. The case where we have $a == b == n$ since we have the original prefrix and suffix equal to the array 
+    we are guranteed the longest. 
+
+\begin{lstlisting}
+int main() {
+  int t;
+  cin >> t;
+  while (t--) {
+    int n, a, b;
+    cin >> n >> a >> b;
+    if (a+b+2 <= n || (a==b && b == n)) {
+      cout << "YES\n";
+    } else {
+      cout << "NO\n";
+    }
+  }
+}
+\end{lstlisting}
+\end{solution}
+
+\end{document}

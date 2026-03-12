@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}800 rated}{2}{section.2}%
+\contentsline {section}{\numberline {2}The Configuration}{4}{section.53}%
+\contentsline {section}{\numberline {3}Some Hints}{5}{section.54}%
+\contentsline {section}{\numberline {4}Answers}{6}{section.55}%
+\contentsline {section}{\numberline {5}Sketches of Solutions}{7}{section.67}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

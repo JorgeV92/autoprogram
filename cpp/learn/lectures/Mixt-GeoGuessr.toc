@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}Introduction to object-oriented programming}{1}{section.2}%
+\contentsline {section}{\numberline {2}The Configuration}{3}{section.69}%
+\contentsline {section}{\numberline {3}Some Hints}{4}{section.70}%
+\contentsline {section}{\numberline {4}Answers}{5}{section.71}%
+\contentsline {section}{\numberline {5}Sketches of Solutions}{6}{section.83}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

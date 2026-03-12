@@ -1,0 +1,358 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX spellcheck = English (Aspell)
+% -----------------------------*- LaTeX -*------------------------------
+%
+%   handout.sty -- definitions for notes, class handouts, homeworks,
+%   		   exams, and so forth.
+%
+% ----------------------------------------------------------------------
+
+% support landscape mode (for class slides)
+\DeclareOption{landscape}{\def\@@orient@@{landscape}}
+\DeclareOption{portrait}{\def\@@orient@@{portrait}}
+\ExecuteOptions{portrait}
+\ProcessOptions\relax
+
+% margins
+\RequirePackage[hmargin=1.25in,vmargin=1in,marginparwidth=0.75in,marginparsep=0.125in,heightrounded=true,\@@orient@@]{geometry}
+
+% Fonts (comment out if you get errors)
+\RequirePackage[charter]{mathdesign}
+\RequirePackage[scaled=0.96,sups,scosf,osf]{XCharter} % old style (“lower case”) digits
+\useproportional
+% I don’t know why, but \useproportional is necessary to get non-I-shaped 1.
+\linespread{1.04}	%recommended by xcharter docs
+\RequirePackage[osf,semibold,scale=0.95]{sourcesanspro}
+\RequirePackage{inconsolata}
+
+% Fix math fonts to match text fonts
+\SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{b}{\updefault}
+\SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{b}{\updefault}
+\SetMathAlphabet{\mathsf}{normal}{\encodingdefault}{\sfdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathtt}{normal}{\encodingdefault}{\ttdefault}{\mddefault}{\updefault}
+
+% Symbols and typesetting
+\RequirePackage{stmaryrd,textcomp}
+\RequirePackage{microtype}
+
+% use color
+\RequirePackage[dvipsnames,usenames,cmyk]{xcolor}
+\definecolor{Hilite}{cmyk}{0,0.2,0,0}
+\definecolor{LightYellow}{cmyk}{0,0,0.2,0}
+\definecolor{Lightgray}{cmyk}{0,0,0,0.2}
+\def\hilite#1{\colorbox{Hilite}{#1}}		% Should probably use the soul package instead
+
+\hypersetup{urlcolor=NavyBlue}	% Change from default Blue in jeffe.sty
+
+
+% vertical alignment and dashed lines in arrays
+\RequirePackage{colortbl} % Just in case; must be loaded before arydshln
+\RequirePackage{array}
+\RequirePackage{arydshln}
+\dashlinedash 0.75pt
+\dashlinegap 1.5pt
+
+% enumerate, tabularx, mdframed
+\RequirePackage{enumerate}	% NO NOT ENUMITEM!!!
+\RequirePackage{tabularx}	% multipage tabulars
+\RequirePackage{mdframed}	% for solutions and rubrics
+% consider using tcolorbox instead of mdframed to fix footnote behavior!
+
+%
+%  \headers{left}{middle}{right} -- set up boldface underlined headers
+%	left	-- left header item
+%	middle	-- middle header item
+%	right	-- right header item
+%  
+%  \headers{CS 170}{Final Exam}{Fall 1992}
+%  \headers{CS 277}{Homework 1 (9/15/92)}{Jeff Erickson}
+%
+\newcommand{\headers}[3]{
+   \newpage\setcounter{page}{1}
+   \def\@oddhead{$\underline{\hbox to\textwidth{\footnotesize%
+	\textbf{\rlap{#1}\phantom{hj}\hfill #2 \hfill \llap{#3}}}}$}
+   \def\@oddfoot{\hfill\thepage\hfill}
+}
+
+%
+%  shadowbox sets enclosed text in a gray rectangle with a black border
+%  boxquote is a centered shadowbox with small sans-serif text
+%  These use minipage environments, so they do NOT break across page boundaries.
+%
+\definecolor{Shadow}{cmyk}{0,0,0,0.025}
+\newenvironment{shadowbox}[1]%
+   {\begin{lrbox}{\@tempboxa}\begin{minipage}{#1\columnwidth}}
+   {\end{minipage}\end{lrbox}\fcolorbox{black}{Shadow}{\usebox{\@tempboxa}}}
+
+\newenvironment{boxquote}[1]
+	{\begin{center}\small\sf\begin{shadowbox}{#1}}
+	{\end{shadowbox}\end{center}}
+
+\newmdenv[%
+	linecolor = Black,%
+	backgroundcolor = Shadow,%
+	linewidth = 0.75pt,%
+	leftmargin = 0.025\linewidth,%
+	rightmargin = 0.025\linewidth,%
+	innerleftmargin = 5pt,%
+	innerrightmargin = 5pt,%
+	font=\small\sffamily\parindent0pt\parskip1pt%
+	]{Boxquote}
+
+
+%
+%  “Problems”’ environment.  Just like “enumerate”’, but indent second and
+%  succeeding paragraphs in each item, and separate items a little more.
+%
+\newlength\tmplen
+\newcounter{probnum}[section]
+\newenvironment{problems}
+{\tmplen=\parindent\begin{enumerate}\parindent=\tmplen\itemsep=3ex plus 0.1fil}
+{\setcounter{probnum}{\theenumi}\end{enumerate}}
+
+%
+%  Solution environment.
+%  \begin{solution} ... \end{solution} -- without frame
+%  \begin{Solution} ... \end{Solution} -- with frame
+%
+\def\EOSmark{$\blacksquare$\global\needqedfalse}
+\def\EOS{\ifneedqed\markatright{\EOSmark}\else\null\fi}
+
+\newproof{solution}{\global\needqedtrue\normalsize\rmfamily\bfseries Solution}(\normalsize\rmfamily\parindent1.5em)[\EOS]
+
+\newproof{Solution}{\global\needqedtrue\normalsize\rmfamily\bfseries Solution}(\normalsize\rmfamily\parindent1.5em)[\EOS]
+
+\surroundwithmdframed[%
+	linewidth = 1.25pt,%
+	skipabove = 1ex,%
+%	skipbelow = 10ex,%	Doesn’t do anything
+	linecolor = OliveGreen,%
+	backgroundcolor=Yellow!2]{Solution}
+
+%
+%  Framed NotSolution environment.
+%
+\def\DUH{\ifneedqed\markatright{$\clubsuit$\global\needqedfalse}\else\null\fi}
+
+\newproof{NotSolution}{\global\needqedtrue\normalsize\rmfamily\bfseries\color{BrickRed} Non-solution}(\normalsize\rmfamily\parindent1.5em\color{BrickRed})[\DUH]
+
+\surroundwithmdframed[%
+	linewidth = 1.25pt,%
+	linecolor = BrickRed,%
+	backgroundcolor=Red!2]{NotSolution}
+	
+%
+%  \hidesolutions does just what it sounds like.
+%  But for now only hides {solution}, not {Solution}
+%
+\RequirePackage{verbatim}
+\def\hidesolutions{\let\soln\comment\let\endsoln\endcomment
+\let\solution\comment\let\endsolution\endcomment} 
+
+%  \begin{Proof} ... \end{Proof} -- with frame
+
+% ----------------------
+% rubric: Standard rubric outside solution
+% subrubric: Rubric with correct margins to nest inside solution box
+% Rubric: replace ”Rubric” with argument.
+%	For example: \begin{Rubric}{Standard induction rubric}...\end{Rubric}
+% ----------------------
+
+\newproof{rubric}{\color{BrickRed}\small\sffamily\bfseries Rubric}(\color{BrickRed}\small\sffamily\parindent1.5em)
+
+\newproof{subrubric}{\color{BrickRed}\small\sffamily\bfseries Rubric}(\color{BrickRed}\small\sffamily\parindent1.5em)
+
+\newenvironment{Rubric}[1]
+{\color{BrickRed}\small\sffamily\begin{oneshot}{#1}\upshape\parindent1.5em}
+{\end{oneshot}}
+
+\surroundwithmdframed[
+	linewidth = 1pt,%
+	skipabove = 1ex,%
+	skipbelow = 1ex,%
+	innerleftmargin = 0.5em,%
+	innerrightmargin = 0.5em,%
+	linecolor = BrickRed,%
+	backgroundcolor = White]{rubric}
+
+\surroundwithmdframed[
+	linewidth = 1pt,%
+	skipabove = 1ex,%
+	skipbelow = 10ex,% doesn’t do anything
+	innerleftmargin = 0.5em,%
+	innerrightmargin = 0.5em,%
+	linecolor = BrickRed,%
+	backgroundcolor = White]{subrubric}
+
+\surroundwithmdframed[
+	linewidth = 1pt,%
+	skipabove = 1ex,%
+	skipbelow = 1ex,%
+	innerleftmargin = 0.5em,%
+	innerrightmargin = 0.5em,%
+	linecolor = BrickRed,%
+	backgroundcolor = White]{Rubric}
+
+
+% ----------------------
+%  Collaborators and sources, for HW template
+% ----------------------
+
+\newproof{Sources}{\color{RoyalBlue}\small\sffamily\bfseries Collaborators and sources}(\color{RoyalBlue}\small\sffamily\parindent1.5em)
+
+\surroundwithmdframed[
+	linewidth = 1pt,%
+	skipabove = 2ex,%
+	skipbelow = 1ex,%
+	innerleftmargin = 0.5em,%
+	innerrightmargin = 0.5em,%
+	linecolor = RoyalBlue,%
+	backgroundcolor = White]{Sources}
+
+
+%
+%  Add stars and other marks in front of enumerated items.
+%  *** Clashes with the enumitem package! ***
+%
+\def\itemstars{}
+\def\itemding{}
+\def\resetmarks{\xdef\itemding{}\xdef\itemstars{}}
+\def\Hard{\def\itemstars{\boldmath $^\star$}}
+\def\ReallyHard{\def\itemstars{$^\bigstar$}}
+\def\ReallyReallyHard{\def\itemstars{{\Large$\bigstar$}}}
+\def\labelenumi{\llap{\itemding\itemstars}\theenumi.\resetmarks}
+\def\labelenumii{\llap{\itemding\itemstars}(\theenumii)\resetmarks}
+
+\def\Hint#1{\textsl{[Hint: #1]}}
+
+%
+%  Flag advanced sections and subsections in notes; hack using \marginpar
+%
+\reversemarginpar
+\@mparswitchfalse
+\def\SectFlag#1{\marginpar{\hfill\rlap{\hspace{\marginparsep}\llap{#1}}}}
+\def\Ouch#1{\SectFlag{#1\boldmath$^\star$}}
+\pdfstringdefDisableCommands{\let\Ouch\relax} % allow \OUCH in section titles
+\def\hardsubsection#1{\subsection{\protect\Ouch{\large}#1}}
+\def\hardsection#1{\section{\protect\Ouch{\Large}#1}}
+
+%
+%  Inline figure environment — Frustrating as hell.  The floating version floats,
+%  but it isn’t visually centered inside lists (like the problem lists at the end of 
+%  lecture notes, or homeworks, or exams).  The non-floating version is visually
+%  centered, but doesn’t float.
+%
+%\newenvironment{inline}{\begin{center}\footnotesize\sf}{\end{center}}
+\newenvironment{inline}{\begin{figure}[htp]\centering\footnotesize\sffamily}{\end{figure}}
+
+% ========================================================================
+%  Standard headers for (submitted) homework solutions
+% ========================================================================
+\def\@Class{Woolly Thinking 101}
+\def\Class#1{\renewcommand{\@Class}{#1}}
+
+\def\@Semester{Backspindle 2013}
+\def\Semester#1{\renewcommand{\@Semester}{#1}}
+
+\def\@Exam{Terminal Exam}
+\def\Exam#1{\renewcommand{\@Exam}{#1}}
+
+\def\@Name{Name}
+\def\Name#1{\renewcommand{\@Name}{#1}}
+
+\newcounter{Authors}
+\setcounter{Authors}{3}
+\def\Authors#1{\setcounter{Authors}{#1}}
+
+\def\@AuthorOne{Horace Worblehat}
+\def\@NetIDOne{ook}
+\def\AuthorOne#1#2{\renewcommand{\@AuthorOne}{#1}\renewcommand{\@NetIDOne}{#2}}
+
+\def\@AuthorTwo{Mustrum Ridcully}
+\def\@NetIDTwo{brown}
+\def\AuthorTwo#1#2{\renewcommand{\@AuthorTwo}{#1}\renewcommand{\@NetIDTwo}{#2}}
+
+\def\@AuthorThree{Ponder Stibbons}
+\def\@NetIDThree{hex}
+\def\AuthorThree#1#2{\renewcommand{\@AuthorThree}{#1}\renewcommand{\@NetIDThree}{#2}}
+
+\def\@Section{}
+\def\Section#1{\renewcommand{\@Section}{#1}}
+
+\long\def\HomeworkHeader#1#2{
+\headers{\@Class\ \@Semester}{HW #1.#2}{{\@NetIDOne}\ifnum\theAuthors>1{/\@NetIDTwo}\fi\ifnum\theAuthors>2{/\@NetIDThree}\fi}
+\thispagestyle{plain}
+\setcounter{page}{1}
+\begin{center}
+\fbox{\hbox to 0.97\linewidth{
+\def\arraystretch{1.05}
+\large
+\begin{tabular}{@{}l}
+	\@Class\ \@Semester\\
+	\textbf{Homework {#1} Problem {#2}}\\
+	\ifx\@Section\@empty~\else Return section: \@Section\fi
+\end{tabular}
+\hfill
+\begin{tabular}{r@{~}l@{}}
+	{\@AuthorOne} & ({\@NetIDOne})
+	\\
+	\ifnum\theAuthors>1\quad{\@AuthorTwo}\fi &
+	\ifnum\theAuthors>1({\@NetIDTwo})\fi
+	\\
+	\ifnum\theAuthors>2\quad{\@AuthorThree}\fi &
+	\ifnum\theAuthors>2({\@NetIDThree})\fi
+\end{tabular}
+}}
+\end{center}
+}
+
+\long\def\SolutionHeader#1#2{
+\headers{\@Class\ \@Semester}{HW #1.#2}{Solution}
+\thispagestyle{plain}
+\setcounter{page}{1}
+\begin{center}
+\fbox{\hbox to 0.97\linewidth{
+\Large
+	\@Class\ \@Semester
+	\hfill
+	Homework {#1} Problem {#2} Solution
+}}
+\end{center}
+}
+
+\long\def\ExamHeader#1{
+\newpage
+\thispagestyle{plain}
+\setcounter{page}{#1}
+\def\@oddfoot{\hfill #1 (continued)\hfill} % better for multi-page problems
+\begin{center}
+\large
+\def\arraystretch{1.2}
+\begin{tabularx}{\textwidth}{|c|l@{\extracolsep{\fill}}l|}
+	\hline
+	\textbf{\@Class ~\decosix~\@Semester}	& \@Name: & \\
+	\textbf{\boldmath{\@Exam} Problem {#1}}	& &\\
+	\hline
+\end{tabularx}
+\end{center}
+}
+
+\long\def\ExamSolHeader#1{
+\headers{\@Class}{\boldmath{\@Exam} Problem #1 Solution}{\ \@Semester}
+\thispagestyle{plain}
+\renewcommand*{\thepage}{#1-\arabic{page}}
+\setcounter{page}{1}
+\begin{center}
+\Large
+\def\arraystretch{1.2}
+\begin{tabular}{|c|}
+	\hline
+	\qquad \textbf{\@Class ~\decosix~\@Semester} \qquad{} \\
+	\textbf{\boldmath {\@Exam} Problem {#1} Solution}\\
+	\hline
+\end{tabular}
+\end{center}
+}
+
+
+
