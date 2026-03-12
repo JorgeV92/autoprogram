@@ -1,3 +1,3 @@
 # autoprogram
 
-## L
+A collection of progress for algorithms and becoming a better programer.
